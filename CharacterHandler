@@ -1,0 +1,100 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using System.IO;
+
+public class CharacterHandler : MonoBehaviour
+{
+    //Method 1: 
+
+    // public BlobData blob1;
+
+    // public static string directory = "/BlobData/"; 
+    // public static string fileName = "myBlobData.txt"; 
+
+    // public void Save(BlobData blob1)
+    // {
+    //     string dir = Application.persistentDataPath + directory; 
+
+    //     if(!Directory.Exists(dir))
+    //     {
+    //         Directory.CreateDirectory(dir); 
+    //     }
+
+    //     string json = JsonUtility.ToJson(blob1); 
+    //     File.WriteAllText(dir +fileName, json); 
+    // }
+
+    // public BlobData Load()
+    // {
+    //     string fullPath = Application.persistentDataPath + directory + fileName; 
+    //     BlobData blob2 = new BlobData(); 
+
+    //     if(File.Exists(fullPath))
+    //     {
+    //         string json = File.ReadAllText(fullPath); 
+    //         blob2 = JsonUtility.FromJson<BlobData>(json); 
+    //     }
+    //     else
+    //     {
+    //         Debug.Log("File does not exist");
+    //     }
+
+    //     return blob2; 
+    // }
+
+    //Method 2: 
+
+    [SerializeField] private GameObject blob; 
+    // private IUnit unit; 
+
+    // private void Awake()
+    // {
+    //     unit = blob.GetComponent<IUnit>(); 
+
+    //     SaveCustomization saveCustomization = new SaveCustomization
+    //     {
+    //         accesories = "headphones";
+    //     };
+
+    //     string json = JsonUtility.ToJson(blob); 
+    //     Debug.Log(json); 
+    // }
+
+    private void Save()
+    {
+        SaveCustomization aObj = blob.GetComponent("aObj");
+        SaveCustomization tObj = blob.GetComponent("tObj");
+        SaveCustomization pObj = blob.GetComponent("pObj");
+        SaveCustomization sObj = blob.GetComponent("sObj");
+        SaveCustomization hObj = blob.GetComponent("hObj"); 
+
+        // accessories = aObj; 
+        // tops = tObj; 
+        // pants = pObj; 
+        // shoes = sObj; 
+        // hair = hObj; 
+
+        string json = JsonUtility.ToJson(saveBlob); 
+        File.WriteAllText(Application.dataPath + "/save.txt", json);
+    }
+
+    private void Load()
+    {
+        if(File.Exists(Application.dataPath + "/save.txt"))
+        {
+            string saveString = File.ReadAllText(Application.dataPath);
+        }
+    }
+
+    private class SaveCustomization
+    {
+        public string accessories; 
+        public string tops; 
+        public string pants; 
+        public string shoes; 
+        public string hair; 
+    }
+
+   
+}
